@@ -5,19 +5,41 @@ import {
   useProductState,
 } from 'Contexts/Product'
 import { useLoadingState } from 'Contexts/Loading'
+import { useGlobalAction } from 'Contexts/Global'
+import { Button } from 'antd'
 
 const Product = () => {
   const state = useProductState()
-  const actions = useProductActions()
+  const Productactions = useProductActions()
   const loadingState = useLoadingState()
+  const globalActions = useGlobalAction()
+  // Effect get list product
   useEffect(() => {
-    actions.getItems()
-  }, [actions])
+    Productactions.getItems()
+  }, [Productactions])
+  // handle OpenModal confirm
+  const handleOpenModalConfirm = () => {
+    globalActions.setModal('ConfirmationModal', {
+      title: 'Confirm',
+      content: 'Confirm product',
+      handleConfirm: async () => {
+        globalActions.showLoadingAction()
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(true)
+          }, 2000)
+        })
+        globalActions.clearModal()
+        globalActions.hideLoadingAction()
+      },
+    })
+  }
   return (
     <div>
-      {loadingState.isLoadingAction && <div>..... Loading</div>}
+      {loadingState.isLoadingList && <div>..... Loading</div>}
       <h1>Product page</h1>
       {state.items && state.items.map((item, index) => <div>{item}</div>)}
+      <Button onClick={handleOpenModalConfirm}>Open Confirm modal</Button>
     </div>
   )
 }

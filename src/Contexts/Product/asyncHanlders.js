@@ -7,12 +7,13 @@ const delay = time =>
     }, time)
   })
 
-const getItemsWorker = async (dispatch, action, loadingActions) => {
+const getItemsWorker = async (dispatch, action, globalActions) => {
   try {
-    loadingActions.showLoadingAction()
+    globalActions.showLoadingList()
     const response = await delay(3000)
     dispatch({ type: ACTIONS.GET_ITEMS_SUCCESS, items: ['item1', 'item2'] })
-    loadingActions.hideLoadingAction()
+    globalActions.hideLoadingList()
+    globalActions.openNotification('Notification', 'This is a notification')
   } catch (error) {}
 }
 

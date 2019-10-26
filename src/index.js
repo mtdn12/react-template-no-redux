@@ -3,18 +3,15 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from 'Components/App'
 import { BrowserRouter } from 'react-router-dom'
-import LoadingProvider from 'Contexts/Loading'
-import AuthProvider from 'Contexts/Authentication'
+import GlobalProvider from 'Contexts/Global'
 import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
-  <LoadingProvider>
-    <AuthProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AuthProvider>
-  </LoadingProvider>,
+  <GlobalProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </GlobalProvider>,
   document.getElementById('root')
 )
 

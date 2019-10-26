@@ -25,4 +25,13 @@ export function ModalProvider(props) {
 export const useModalState = () => useContext(ModalState)
 export const useModalActions = () => useContext(ModalActions)
 
+// HOC
+export const withModalProdiver = Component => props => {
+  return (
+    <ModalProvider>
+      <Component {...props} />
+    </ModalProvider>
+  )
+}
+
 export default ModalProvider

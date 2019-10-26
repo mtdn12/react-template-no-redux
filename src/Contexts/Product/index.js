@@ -2,7 +2,7 @@ import React, { useReducer, useContext, useMemo } from 'react'
 import reducers, { initialState } from './reducers'
 import { getActions } from './actions'
 import { applyMiddleWare } from './middleware'
-import { useLoadingActions } from '../Loading'
+import { useGlobalAction } from '../Global'
 
 const ProductState = React.createContext()
 const ProductActions = React.createContext()
@@ -10,11 +10,12 @@ const ProductActions = React.createContext()
 export function ProductProvider(props) {
   const [state, dispatch] = useReducer(reducers, initialState)
   // Attach middle ware to capture every dispatch
-  const loadingActions = useLoadingActions()
+  const globalActions = useGlobalAction()
+  console.log('global', globalActions)
   const actions = useMemo(() => {
-    const enhanceDispatch = applyMiddleWare(dispatch, loadingActions)
+    const enhanceDispatch = applyMiddleWare(dispatch, globalActions)
     return getActions(enhanceDispatch)
-  }, [dispatch, loadingActions])
+  }, [dispatch, globalActions])
 
   return (
     <ProductState.Provider value={state}>

@@ -4,10 +4,10 @@ import { getActions } from './actions'
 import { applyMiddleWare } from './middleware'
 import { useLoadingActions } from '../Loading'
 
-const ProductState = React.createContext()
-const ProductActions = React.createContext()
+const AuthState = React.createContext()
+const AuthActions = React.createContext()
 
-export function ProductProvider(props) {
+export function AuthProvider(props) {
   const [state, dispatch] = useReducer(reducers, initialState)
   // Attach middle ware to capture every dispatch
   const loadingActions = useLoadingActions()
@@ -17,24 +17,16 @@ export function ProductProvider(props) {
   }, [dispatch, loadingActions])
 
   return (
-    <ProductState.Provider value={state}>
-      <ProductActions.Provider value={actions}>
+    <AuthState.Provider value={state}>
+      <AuthActions.Provider value={actions}>
         {props.children}
-      </ProductActions.Provider>
-    </ProductState.Provider>
+      </AuthActions.Provider>
+    </AuthState.Provider>
   )
 }
 
 // Hooks
-export const useProductState = () => useContext(ProductState)
-export const useProductActions = () => useContext(ProductActions)
-// HOC
-export const withProductProdiver = Component => props => {
-  return (
-    <ProductProvider>
-      <Component {...props} />
-    </ProductProvider>
-  )
-}
+export const useAuthState = () => useContext(AuthState)
+export const useAuthActions = () => useContext(AuthActions)
 
-export default ProductProvider
+export default AuthProvider
