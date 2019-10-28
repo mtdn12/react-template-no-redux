@@ -13,7 +13,7 @@ const getItemsWorker = async (dispatch, action, globalActions) => {
     const response = await delay(3000)
     dispatch({ type: ACTIONS.GET_ITEMS_SUCCESS, items: ['item1', 'item2'] })
     globalActions.hideLoadingList()
-    globalActions.openNotification('Notification', 'This is a notification')
+    globalActions.openNotification('Notification', 'Load Items success')
   } catch (error) {}
 }
 

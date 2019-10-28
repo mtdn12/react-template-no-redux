@@ -1,14 +1,23 @@
 import React from 'react'
-import { Switch } from 'react-router-dom'
-import Home from 'Components/pages/Home'
-import Product from 'Components/pages/Product'
+import { Switch, Redirect } from 'react-router-dom'
 import PrivateRouteWithTemplate from 'Components/organisms/PrivateRouteWithTemplate'
+import { Routes } from './routes'
 
 const App = () => {
   return (
     <Switch>
-      <PrivateRouteWithTemplate path="/home" exact component={Home} />
-      <PrivateRouteWithTemplate path="/product" exact component={Product} />
+      <Redirect exact from="/" to="/home" />
+      <PrivateRouteWithTemplate
+        path="/home"
+        exact
+        component={Routes.asyncHome}
+      />
+      <PrivateRouteWithTemplate
+        path="/product"
+        exact
+        component={Routes.asyncProduct}
+      />
+      {/* <PrivateRouteWithTemplate path="/loading" exact component={LoadingPage} /> */}
     </Switch>
   )
 }
