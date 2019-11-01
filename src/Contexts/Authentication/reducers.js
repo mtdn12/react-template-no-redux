@@ -1,7 +1,8 @@
 import { actionHandlers } from './actions'
+import { getTokenData } from 'Utils/token'
 
 export const initialState = {
-  auth: null,
+  auth: getTokenData(),
 }
 
 export default function reducer(state = initialState, action) {

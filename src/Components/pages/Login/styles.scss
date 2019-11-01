@@ -1,0 +1,16 @@
+.login-page {
+    padding: 16px;
+    height: 100vh;
+    background-image: radial-gradient(circle farthest-corner at 7.4% 45.1%, rgba(236, 206, 251, 1) 0%, rgba(205, 237, 246, 1) 45.1%, rgba(227, 251, 252, 1) 78.4%, rgba(230, 247, 235, 1) 90%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .content-wrap {
+        width: 35%;
+    }
+
+    .input-wrap {
+        margin: 8px 0;
+    }
+}

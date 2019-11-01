@@ -12,7 +12,6 @@ export const ACTIONS = {
 export const getActions = dispatch => ({
   getItems: () => dispatch({ type: GET_ITEMS_REQUEST }),
 })
-
 // Actions Handlers
 export const actionHandlers = {
   [GET_ITEMS_SUCCESS]: (state, { items }) => ({ ...state, items }),

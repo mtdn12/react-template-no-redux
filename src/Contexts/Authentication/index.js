@@ -2,7 +2,7 @@ import React, { useReducer, useContext, useMemo } from 'react'
 import reducers, { initialState } from './reducers'
 import { getActions } from './actions'
 import { applyMiddleWare } from './middleware'
-import { useLoadingActions } from '../Loading'
+import { useGlobalAction } from '../Global'
 
 const AuthState = React.createContext()
 const AuthActions = React.createContext()
@@ -10,11 +10,11 @@ const AuthActions = React.createContext()
 export function AuthProvider(props) {
   const [state, dispatch] = useReducer(reducers, initialState)
   // Attach middle ware to capture every dispatch
-  const loadingActions = useLoadingActions()
+  const glovalActions = useGlobalAction()
   const actions = useMemo(() => {
-    const enhanceDispatch = applyMiddleWare(dispatch, loadingActions)
+    const enhanceDispatch = applyMiddleWare(dispatch, glovalActions)
     return getActions(enhanceDispatch)
-  }, [dispatch, loadingActions])
+  }, [dispatch, glovalActions])
 
   return (
     <AuthState.Provider value={state}>
@@ -27,6 +27,6 @@ export function AuthProvider(props) {
 
 // Hooks
 export const useAuthState = () => useContext(AuthState)
-export const useAuthActions = () => useContext(AuthActions)
+export const useAuthAction = () => useContext(AuthActions)
 
 export default AuthProvider

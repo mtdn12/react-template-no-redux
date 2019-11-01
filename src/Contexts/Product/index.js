@@ -11,7 +11,6 @@ export function ProductProvider(props) {
   const [state, dispatch] = useReducer(reducers, initialState)
   // Attach middle ware to capture every dispatch
   const globalActions = useGlobalAction()
-  console.log('global', globalActions)
   const actions = useMemo(() => {
     const enhanceDispatch = applyMiddleWare(dispatch, globalActions)
     return getActions(enhanceDispatch)

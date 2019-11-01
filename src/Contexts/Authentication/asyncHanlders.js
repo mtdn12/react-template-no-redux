@@ -1,19 +1,30 @@
 import { ACTIONS } from './actions'
+import { AuthService } from 'Service/AuthService'
+import jwtDecode from 'jwt-decode'
+import { setToken } from 'Utils/token'
 
-const delay = time =>
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(true)
-    }, time)
-  })
-
-const loginWorker = async (dispatch, { values }, loadingActions) => {
+const loginWorker = async (
+  dispatch,
+  { values, handleLoginSuccess },
+  globalActions
+) => {
   try {
-    loadingActions.showLoadingAction()
-    const response = await delay(3000)
-    dispatch({ type: ACTIONS.LOGIN_SUCCESS, auth: { name: 'Tuan' } })
-    loadingActions.hideLoadingAction()
-  } catch (error) {}
+    globalActions.showLoadingAction()
+    const response = await AuthService.login()
+    const token = response.token
+    const auth = jwtDecode(token)
+    setToken(token)
+    dispatch({
+      type: ACTIONS.LOGIN_SUCCESS,
+      auth,
+    })
+    globalActions.hideLoadingAction()
+    handleLoginSuccess()
+  } catch (error) {
+    dispatch({ type: ACTIONS.LOGIN_FAILURE })
+    globalActions.hideLoadingAction()
+    globalActions.openNotification(error.message)
+  }
 }
 
 export const ayncHandlers = {

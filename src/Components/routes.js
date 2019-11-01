@@ -11,7 +11,13 @@ const asyncProduct = Loadable({
   loading: LoadingPage,
 })
 
+const asyncLogin = Loadable({
+  loader: () => import('Components/pages/Login'),
+  loading: LoadingPage,
+})
+
 export const Routes = {
   asyncHome,
   asyncProduct,
+  asyncLogin,
 }
