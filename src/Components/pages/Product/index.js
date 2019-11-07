@@ -15,8 +15,8 @@ const Product = () => {
   const globalActions = useGlobalAction()
   // Effect get list product
   useEffect(() => {
-    Productactions.getItems()
-  }, [Productactions])
+    Productactions.getItems(state.filter)
+  }, [Productactions, state.filter])
   // handle OpenModal confirm
   const handleOpenModalConfirm = () => {
     globalActions.setModal('ConfirmationModal', {
@@ -34,12 +34,18 @@ const Product = () => {
       },
     })
   }
+
+  // Load more
+  const loadMore = () => {
+    Productactions.setFilter({ page: state.filter.page + 1 })
+  }
   return (
     <div>
       {loadingState.isLoadingList && <div>..... Loading</div>}
       <h1>Product page</h1>
-      {state.items && state.items.map((item, index) => <div>{item}</div>)}
+      {state.items && state.items.map((item, index) => <div>{item.name}</div>)}
       <Button onClick={handleOpenModalConfirm}>Open Confirm modal</Button>
+      <Button onClick={loadMore}>Load More</Button>
     </div>
   )
 }

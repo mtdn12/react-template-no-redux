@@ -3,19 +3,22 @@ import { Input, Icon, Typography, Button } from 'antd'
 import { object } from 'prop-types'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { useAuthAction } from 'Contexts/Authentication'
+import { Redirect } from 'react-router-dom'
+import { useAuthAction, useAuthState } from 'Contexts/Authentication'
 import { useLoadingState } from 'Contexts/Loading'
 import './styles.scss'
 
 const Login = ({ history }) => {
   const actions = useAuthAction()
   const loadingState = useLoadingState()
+  const authState = useAuthState()
   // handle login success
   const handleLoginSuccess = () => {
     history.push('/home')
   }
   return (
     <div className="login-page">
+      {authState.auth && <Redirect exact from="/login" to="/home" />}
       <div className="content-wrap">
         <Typography.Title style={{ textAlign: 'center' }}>
           Login
